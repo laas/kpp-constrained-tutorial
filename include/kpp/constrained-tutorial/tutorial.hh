@@ -25,7 +25,8 @@
 
 #include <kppInterface/kppInterface.h>
 
-#include <hpp/constrained/planner/grasping-planner.hh>
+#include <hpp/constrained/planner/fwd.hh>
+#include <hpp/corbaserver/constrained/fwd.hh>
 
 namespace kpp {
   namespace constrained {
@@ -35,6 +36,7 @@ namespace kpp {
     public:
       
       typedef hpp::constrained::GraspingPlanner Planner;
+      typedef hpp::constrained::Server Server;
 
       static TutorialShPtr create();
 
@@ -49,6 +51,7 @@ namespace kpp {
       ktStatus init(const TutorialWkPtr & i_wkPtr);
 
       Planner * hppPlanner_;
+      Server* server_;
 
     private:
       

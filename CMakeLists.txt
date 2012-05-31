@@ -20,7 +20,7 @@ SET(CXX_DISABLE_WERROR 1)
 
 SETUP_PROJECT()
 
-ADD_REQUIRED_DEPENDENCY("hpp-constrained-planner")
+ADD_REQUIRED_DEPENDENCY(hpp-constrained-corba)
 ADD_REQUIRED_DEPENDENCY(kppInterface)
 
 # Search for Boost.
@@ -36,7 +36,7 @@ SET(KINEO_ADDON_SOURCES
 
 KINEO_ADDON(${PROJECT_NAME})
 
-PKG_CONFIG_USE_DEPENDENCY(${PROJECT_NAME} hpp-constrained-planner)
+PKG_CONFIG_USE_DEPENDENCY(${PROJECT_NAME} hpp-constrained-corba)
 PKG_CONFIG_USE_DEPENDENCY(${PROJECT_NAME} kppInterface)
 
 # Documentation produced by doxygen

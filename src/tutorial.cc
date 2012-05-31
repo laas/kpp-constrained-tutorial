@@ -15,7 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with kpp-constrained-tutorial.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <kpp/constrained-tutorial/tutorial.hh>
+#include <hpp/util/debug.hh>
+#include <hpp/constrained/planner/grasping-planner.hh>
+#include <hpp/corbaserver/constrained/server.hh>
+
+#include "kpp/constrained-tutorial/tutorial.hh"
 
 namespace kpp {
   namespace constrained {
@@ -24,6 +28,23 @@ namespace kpp {
       CkppInterface(i_planner),
       hppPlanner_(i_planner)
     {
+      char** argv = (char**) malloc (sizeof (char*));
+      argv[0] = strdup ("Kite");
+      server_ = new Server (1, argv, false, "child");
+      server_->setPlanner (hppPlanner_);
+      try {
+	startCorbaServer ();
+	hppDout (info, "Successfully started hpp-corbaserver.");
+      } catch (const std::exception& exc) {
+	hppDout (error, "Failed to start hpp-corbaserver");
+      }
+      try {
+	server_->startCorbaServer("hpp", "plannerContext",
+				  "hpp", "constrained");
+	hppDout (info, "Successfully started constrained corba server.");
+      } catch (const std::exception& exc) {
+	hppDout (error, "Failed to start constrained corba server.");
+      }
     }
 
     Tutorial::~Tutorial()
